@@ -1,0 +1,13 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: green;
+    font-size: 16px;
+}
+
+  h1 {
+    color: blue;
+    font-size: 20px;
+  }
