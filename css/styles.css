@@ -3,11 +3,40 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    color: green;
+    color: #005200;
     font-size: 16px;
 }
 
   h1 {
-    color: blue;
+    color: #0B5628;
     font-size: 20px;
+    text-align: left;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px;
+    width: 50%;
+    border-style: solid;
+
+  }
+  
+  /* Style for grid */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Автоматична адаптація до ширини */
+    gap: 20px; /* Відступи між елементами */
+  }
+  
+  /* Style for ech element of grid */
+  .grid-item {
+    background-color: #e8e8e8;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  .grid-item:hover {
+    transform: scale(1.05);
   }
