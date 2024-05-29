@@ -1,42 +1,97 @@
 /* style.css */
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #005200;
+    font-family: Georgia, serif;
+    color: #000000;
     font-size: 16px;
 }
-
+main{
+  background-color: #00ad3a;
+}
   h1 {
-    color: #0B5628;
-    font-size: 20px;
+    color: #000000;;
+    font-size: 40px;
     text-align: left;
+  }
+
+  .header-page {
+    background-color: #00ad3a;
   }
   .container {
     display: flex;
-    flex-direction: column;
+    align-items: right;
+  }
+  /* Mobile devices */
+@media all and (min-width: 320px) and (max-width: 480px) {
+  h1 {
+    font-size: var(--font-size-xlarge);
+  }
+}
+  .welcome-section {
     margin: 0 auto;
-    padding: 20px;
-    width: 50%;
-    border-style: solid;
+    text-align: center;
+  }
+/*  iPads, Tablets */
+@media all and (min-width: 481px) and (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
 
+  .grid__item:last-child {
+    grid-column: auto / auto;
+    grid-row: auto / auto;
   }
-  
-  /* Style for grid */
-  .grid-container {
-    display: grid;
-    grid-template-columns: 1fr; /* Автоматична адаптація до ширини */
-    gap: 20px; /* Відступи між елементами */
+
+  h1 {
+    font-size: 28px;
   }
-  
-  /* Style for ech element of grid */
-  .grid-item {
-    background-color: #e8e8e8;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: left;
+
+  h2 {
+    font-size: var(--font-size-xlarge);
   }
-  .grid-item:hover {
-    transform: scale(1.05);
+
+  h3 {
+    font-size: var(--font-size-large);
   }
+
+  h4,
+  h5,
+  h6 {
+    font-size: var(--font-size-medium);
+  }
+
+  p {
+    font-size: var(--font-size-small);
+  }
+}
+
+/*   Small screens, laptops, small screens, laptops */
+@media all and (min-width: 769px) {
+  .grid {
+    grid-gap: 10px;
+  }
+
+  .grid__item:last-child {
+    grid-column: auto / auto;
+    grid-row: auto / auto;
+  }
+
+  h1 {
+    font-size: var(--font-size-xlarge);
+  }
+
+  h2 {
+    font-size: var(--font-size-large);
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: var(--font-size-medium);
+  }
+
+  p {
+    font-size: var(--font-size-small);
+  }
+}
