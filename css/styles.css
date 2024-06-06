@@ -4,19 +4,28 @@ body {
   background-color: #00509d;
   color: #000000;
   margin:0;
+  padding: 0;
+  box-sizing: border-box;
 }
 h1{
   color: #ffd500;
-  font-size: 28px;
+  font-size: 1.75rem;
   margin:10px;
   padding: 10px;
   text-align: left;
 }
+.pokemon-list{
+  list-style: none;
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+}
 .pokemon-button{
-  display: inline-block;
   background-color: #ffd500;
   color: #000000;
-  font-size: 16px;
+  font-size: 1rem;
   text-align: center;
   text-decoration: none;
   margin: 4px 2px;
@@ -26,26 +35,41 @@ h1{
   border-radius: 8px;
   width: 200px;
 }
-.pokemon-list{
-  list-style: none;
-  padding: 20px;
-  margin: 20px;
+.pokemon-button:focus {
+  outline: 0.125rem solid #00509d; /* Add focus outline */
+}
+.search input[type=text] {
+  float: right;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  border: none;
+  font-size: 17px;
 }
   /* Mobile devices */
 @media all and (min-width: 320px) and (max-width: 480px) {
   h1 {
-    font-size: x-large;
+    font-size: 1.5rem;
   }
+
 }
 /*  iPads, Tablets */
 @media all and (min-width: 481px) and (max-width: 768px){
-    h1 {font-size: 28px;
+    h1 {font-size: 1.75rem;
+    }
+    .search input[type=text] {
+      float: none;
+      display: block;
+      text-align: left;
+      width: 100%;
+      margin: 0;
+      padding: 14px;
     }
   }
 
 /*   Small screens, laptops, small screens, laptops */
 @media all and (min-width: 769px) {
   h1 {
-    font-size: x-large;
+    font-size: 2rem;
   }
 }
