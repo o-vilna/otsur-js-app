@@ -8,18 +8,20 @@ let pokemonRepository = (function () {
     // Checking the validity of pokemon data
     if (typeof pokemon === "object" && "name" in pokemon) {
       pokemonList.push(pokemon);
-      console.log("Pokemon added successfully");
+      //console.log("Pokemon added successfully");
     } else {
       console.error("Invalid Pokemon data");
     }
-    console.log(Object.keys(pokemon));
+    //console.log(Object.keys(pokemon));
   }
   // Function to get the list of all pokemons
   function getAll() {
     return pokemonList;
   }
   function findByName(name) {
-    return pokemonList.filter((pokemon) => pokemon.name === name);
+    return pokemonList.filter((pokemon) =>
+      pokemon.name.toLowerCase().startsWith(name.toLowerCase())
+    );
   }
 
   function showDetails(item) {
@@ -31,18 +33,22 @@ let pokemonRepository = (function () {
   function addListItem(pokemon) {
     // Assign the ul element with class
     let ulistItem = document.querySelector(".pokemon-list");
-    // Create a new li element for each pokemon
     let listItem = document.createElement("li");
-    // Creating a button
+
     let button = document.createElement("button");
-    // Set button text to Pokémon name
     button.innerText = pokemon.name;
-    // Add class to button
     button.classList.add("pokemon-button");
-    // Appending the button to the list item
+
+    let image = document.createElement("img");
+    image.src = pokemon.imageUrl;
+    image.alt = pokemon.name;
+    image.classList.add("pokemon-image");
+
+    button.appendChild(image);
+
     listItem.appendChild(button);
-    // Adding the li element to the ul
     ulistItem.appendChild(listItem);
+
     button.addEventListener("click", function () {
       showDetails(pokemon);
     });
@@ -104,6 +110,33 @@ let pokemonRepository = (function () {
         hideLoadingMessage();
       });
   }
+  // Function to update the Pokémon list based on the search query
+  //Function to setup search filter
+  function setupSearchFilter() {
+    document
+      .querySelector(".search-input")
+      .addEventListener("input", function () {
+        let searchQuery = this.value.toLowerCase();
+        let filteredPokemon = findByName(searchQuery);
+
+        let ulistItem = document.querySelector(".pokemon-list");
+        ulistItem.innerHTML = "";
+        filteredPokemon.forEach(function (pokemon) {
+          addListItem(pokemon);
+        });
+      });
+  }
+
+  function launchProcesses() {
+    loadList().then(function () {
+      let promises = pokemonList.map((pokemon) => loadDetails(pokemon));
+      Promise.all(promises).then(function () {
+        pokemonList.forEach((pokemon) => addListItem(pokemon));
+        setupSearchFilter();
+      });
+    });
+  }
+
   return {
     add: add,
     getAll: getAll,
@@ -112,14 +145,9 @@ let pokemonRepository = (function () {
     loadList: loadList,
     loadDetails: loadDetails,
     showDetails: showDetails,
+    setupSearchFilter: setupSearchFilter,
+    launchProcesses: launchProcesses,
   };
 })();
 
-pokemonRepository.loadList().then(function () {
-  // Now the data is loaded!
-  pokemonRepository.getAll().forEach(function (pokemon) {
-    pokemonRepository.addListItem(pokemon);
-  });
-});
-let filteredPokemon = pokemonRepository.findByName("Squirtle");
-console.log(filteredPokemon);
+pokemonRepository.launchProcesses();

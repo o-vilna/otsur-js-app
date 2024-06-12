@@ -7,16 +7,17 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <div class="search">
-      <input type="text" placeholder="Search Pokémon">
-    </div>
+    <div class="header-container">
       <h1>Pokédex</h1>
-      <div>
-      <ul class="pokemon-list" id="list">
-      </ul>
-      </div>
-      <script src="js/fetch-polyfill.js"></script>
-      <script src="js/promise-polyfill.js"></script>
-      <script src="js/scripts.js"></script>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search..." class="search-input" />
+    </div>
+    <div>
+      <ul class="pokemon-list" id="list"></ul>
+    </div>
+    <script src="js/fetch-polyfill.js"></script>
+    <script src="js/promise-polyfill.js"></script>
+    <script src="js/scripts.js"></script>
   </body>
 </html>
