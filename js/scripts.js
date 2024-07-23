@@ -3,7 +3,7 @@ let pokemonRepository = (function () {
   // Setting up the pokemon list
   let pokemonList = [];
   let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
-  let modalContainer = document.querySelector("#modal-container");
+  //let modalContainer = document.querySelector("#modal-container");//
 
   // Function to add a new pokemon to the list
   function add(pokemon) {
@@ -25,90 +25,70 @@ let pokemonRepository = (function () {
       pokemon.name.toLowerCase().startsWith(name.toLowerCase())
     );
   }
+
   function showModal(title, text, imageUrl) {
-    modalContainer.innerHTML = "";
-    let modal = document.createElement("div");
-    modal.classList.add("modal");
-
-    // Add the new modal content
-    let closeButtonElement = document.createElement("button");
-    closeButtonElement.classList.add("modal-close");
-    closeButtonElement.innerText = "Close";
-    closeButtonElement.addEventListener("click", hideModal);
-
-    let titleElement = document.createElement("h1");
-    titleElement.innerText = title;
-
-    let contentElement = document.createElement("p");
-    contentElement.innerText = text;
-
-    let imageElement = document.createElement("img");
-    imageElement.src = imageUrl;
-    imageElement.classList.add("modal-image");
-
-    modal.appendChild(closeButtonElement);
-    modal.appendChild(titleElement);
-    modal.appendChild(contentElement);
-    modal.appendChild(imageElement);
-    modalContainer.appendChild(modal);
-
-    modalContainer.classList.add("is-visible");
+    let modalBody = $(".modal-body");
+    let modalTitle = $(".modal-title");
+    let modalHeader = $(".modal-header");
+    modalTitle.text(title);
+    modalBody.html(
+      `<p>${text}</p><img src="${imageUrl}" class="modal-image img-fluid">`
+    );
+    $("#exampleModal").modal("show");
   }
-
-  function hideModal() {
-    modalContainer.classList.remove("is-visible");
-  }
-
-  // Event listeners for modal interactions
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modalContainer.classList.contains("is-visible")) {
-      hideModal();
-    }
-  });
 
   function showDetails(pokemon) {
     showModal(
       pokemon.name,
-      `Height: ${pokemon.height} \nType: ${pokemon.types
-        .map((typeInfo) => typeInfo.type.name)
-        .join(", ")}`,
+      `Height: ${pokemon.height} \nWeight: ${pokemon.weight}`,
       pokemon.imageUrl
     );
   }
-
-  modalContainer.addEventListener("click", (e) => {
-    // Since this is also triggered when clicking INSIDE the modal container,
-    // We only want to close if the user clicks directly on the overlay
-    let target = e.target;
-    if (target === modalContainer) {
-      hideModal();
-    }
-  });
-
+  // Function to add a list item
   function addListItem(pokemon) {
-    // Assign the ul element with class
-    let ulistItem = document.querySelector(".pokemon-list");
-    let listItem = document.createElement("li");
+    let ulistItem = document.querySelector("#list");
+    let listItem = document.createElement("div");
+    listItem.classList.add("col-md-2", "mb-4");
 
-    let button = document.createElement("button");
-    button.innerText = pokemon.name;
-    button.classList.add("pokemon-button");
+    let card = document.createElement("div");
+    card.classList.add("card", "mb-3", "h-100");
 
-    let image = document.createElement("img");
-    image.src = pokemon.imageUrl;
-    image.alt = pokemon.name;
-    image.classList.add("pokemon-image");
+    let cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
 
-    button.appendChild(image);
+    let cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title","text-center");
+    cardTitle.innerText = pokemon.name;
 
-    listItem.appendChild(button);
-    ulistItem.appendChild(listItem);
+    let cardText = document.createElement("p");
+    cardText.classList.add("card-text", "text-center");
+    cardText.innerText = `Type: ${pokemon.types
+      .map((typeInfo) => typeInfo.type.name)
+      .join(", ")}`;
 
-    button.addEventListener("click", function () {
-      pokemonRepository.showDetails(pokemon);
+    let cardImage = document.createElement("img");
+    cardImage.classList.add("card-img-top");
+    cardImage.src = pokemon.imageUrl;
+    cardImage.alt = pokemon.name;
+
+    let cardButton = document.createElement("button");
+    cardButton.classList.add("btn", "btn-primary");
+    cardButton.innerText = "More Details";
+    cardButton.setAttribute("data-toggle", "modal");
+    cardButton.setAttribute("data-target", "#exampleModal");
+
+    cardButton.addEventListener("click", function () {
+      showDetails(pokemon);
     });
-  }
 
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardButton);
+    card.appendChild(cardImage);
+    card.appendChild(cardBody);
+    listItem.appendChild(card);
+    ulistItem.appendChild(listItem);
+  }
   function showLoadingMessage() {
     let loadingMessage = document.createElement("p");
     loadingMessage.innerText = "Loading...";
@@ -153,6 +133,7 @@ let pokemonRepository = (function () {
         // Now we add the details to the item
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
+        item.weight = details.weight;
         item.types = details.types;
         hideLoadingMessage();
       })
@@ -164,12 +145,12 @@ let pokemonRepository = (function () {
   //Function to setup search filter
   function setupSearchFilter() {
     document
-      .querySelector(".search-input")
+      .querySelector(".form-control")
       .addEventListener("input", function () {
         let searchQuery = this.value.toLowerCase();
         let filteredPokemon = findByName(searchQuery);
 
-        let ulistItem = document.querySelector(".pokemon-list");
+        let ulistItem = document.querySelector(".row");
         ulistItem.innerHTML = "";
         filteredPokemon.forEach(function (pokemon) {
           addListItem(pokemon);
@@ -198,8 +179,6 @@ let pokemonRepository = (function () {
     setupSearchFilter: setupSearchFilter,
     launchProcesses: launchProcesses,
     showModal: showModal,
-    hideModal: hideModal,
   };
 })();
-
 pokemonRepository.launchProcesses();
