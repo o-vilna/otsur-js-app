@@ -32,7 +32,7 @@ let pokemonRepository = (function () {
     let modalHeader = $(".modal-header");
     modalTitle.text(title);
     modalBody.html(
-      `<p>${text}</p><img src="${imageUrl}" class="modal-image img-fluid">`
+      `<p>${text}</p><img src="${imageUrl}" class="modal-image img-fluid" alt="${title} image">`
     );
     $("#exampleModal").modal("show");
   }
@@ -48,7 +48,7 @@ let pokemonRepository = (function () {
   function addListItem(pokemon) {
     let ulistItem = document.querySelector("#list");
     let listItem = document.createElement("div");
-    listItem.classList.add("col-md-2", "mb-4");
+    listItem.classList.add("col-lg-3", "col-md-4", "col-sm-6", "col-12", "mb-4");
 
     let card = document.createElement("div");
     card.classList.add("card", "mb-3", "h-100");
@@ -56,8 +56,8 @@ let pokemonRepository = (function () {
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
-    let cardTitle = document.createElement("h5");
-    cardTitle.classList.add("card-title","text-center");
+    let cardTitle = document.createElement("h1");
+    cardTitle.classList.add("card-title", "text-center");
     cardTitle.innerText = pokemon.name;
 
     let cardText = document.createElement("p");
@@ -69,10 +69,10 @@ let pokemonRepository = (function () {
     let cardImage = document.createElement("img");
     cardImage.classList.add("card-img-top");
     cardImage.src = pokemon.imageUrl;
-    cardImage.alt = pokemon.name;
+    cardImage.alt = `Image of ${pokemon.name}`;;
 
     let cardButton = document.createElement("button");
-    cardButton.classList.add("btn", "btn-primary");
+    cardButton.classList.add("btn", "btn-secondary");
     cardButton.innerText = "More Details";
     cardButton.setAttribute("data-toggle", "modal");
     cardButton.setAttribute("data-target", "#exampleModal");
