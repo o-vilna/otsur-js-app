@@ -22,17 +22,16 @@ let pokemonRepository = (function () {
   }
   function findByName(name) {
     return pokemonList.filter((pokemon) =>
-      pokemon.name.toLowerCase().startsWith(name.toLowerCase())
+      pokemon.name.toLowerCase().startsWith(name.toLowerCase()),
     );
   }
 
   function showModal(title, text, imageUrl) {
     let modalBody = $(".modal-body");
     let modalTitle = $(".modal-title");
-    let modalHeader = $(".modal-header");
     modalTitle.text(title);
     modalBody.html(
-      `<p>${text}</p><img src="${imageUrl}" class="modal-image img-fluid" alt="${title} image">`
+      `<p>${text}</p><img src="${imageUrl}" class="modal-image img-fluid" alt="${title} image">`,
     );
     $("#exampleModal").modal("show");
   }
@@ -41,14 +40,20 @@ let pokemonRepository = (function () {
     showModal(
       pokemon.name,
       `Height: ${pokemon.height} \nWeight: ${pokemon.weight}`,
-      pokemon.imageUrl
+      pokemon.imageUrl,
     );
   }
   // Function to add a list item
   function addListItem(pokemon) {
     let ulistItem = document.querySelector("#list");
     let listItem = document.createElement("div");
-    listItem.classList.add("col-lg-3", "col-md-4", "col-sm-6", "col-12", "mb-4");
+    listItem.classList.add(
+      "col-lg-3",
+      "col-md-4",
+      "col-sm-6",
+      "col-12",
+      "mb-4",
+    );
 
     let card = document.createElement("div");
     card.classList.add("card", "mb-3", "h-100");
@@ -69,7 +74,7 @@ let pokemonRepository = (function () {
     let cardImage = document.createElement("img");
     cardImage.classList.add("card-img-top");
     cardImage.src = pokemon.imageUrl;
-    cardImage.alt = `Image of ${pokemon.name}`;;
+    cardImage.alt = `Image of ${pokemon.name}`;
 
     let cardButton = document.createElement("button");
     cardButton.classList.add("btn", "btn-secondary");
